@@ -7,16 +7,16 @@
     </div>
 
     <!-- Show Event Inactive State if disabled by Admin -->
-    <div v-else-if="settings && !settings.active" class="flex flex-col items-center justify-center text-center max-w-lg mx-auto py-16 px-4">
-      <h1 class="text-3xl font-extrabold text-(--color-primary) tracking-tight mb-4">
-        Studio Foto Sedang Nonaktif
+    <div v-else-if="settings && !settings.active" class="flex flex-col items-center justify-center text-center max-w-lg mx-auto py-12 px-6 bg-[#f9f6f0] border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-12">
+      <h1 class="text-3xl sm:text-4xl font-display text-black uppercase tracking-wider mb-4 border-b-4 border-black pb-2">
+        Akses Ditutup
       </h1>
-      <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed mb-8 font-body">
+      <p class="text-lg text-black font-serif italic font-bold mb-8">
         {{ settings.maintenanceMessage || "Studio foto saat ini sedang dinonaktifkan sementara. Ikuti terus sosial media resmi kami untuk info event spesial berikutnya!" }}
       </p>
       <a
         href="/"
-        class="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] hover:brightness-110 text-white font-semibold text-sm py-3.5 px-8 rounded-xl transition-all shadow-md active:scale-95 text-center cursor-pointer"
+        class="bg-black text-[#f9f6f0] font-display text-xl uppercase tracking-widest py-3 px-8 border-4 border-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:translate-x-1 active:shadow-none text-center cursor-pointer"
       >
         Kembali ke Beranda
       </a>
