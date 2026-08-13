@@ -58,14 +58,14 @@
   </div>
 
   <!-- Studio View -->
-  <div v-else class="min-h-screen w-full relative flex flex-col p-4 md:p-8"
+  <div v-else class="min-h-[100dvh] w-full relative flex flex-col p-2 sm:p-4 md:p-8"
        style="background-image: url('/bg.webp'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="absolute top-4 left-4 z-50">
-      <button @click="isStudioActive = false" class="bg-black text-[#f9f6f0] border-[3px] border-black font-serif px-4 py-2 font-bold hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] active:translate-y-0.5 active:translate-x-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] flex items-center gap-2 transition-all uppercase tracking-widest text-sm">
-        <span>&larr;</span> Back to Home
+    <div class="absolute top-2 left-2 sm:top-4 sm:left-4 z-50">
+      <button @click="isStudioActive = false" class="bg-black text-[#f9f6f0] border-[3px] border-black font-serif px-2 sm:px-4 py-1 sm:py-2 font-bold hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] active:translate-y-0.5 active:translate-x-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] flex items-center gap-1 sm:gap-2 transition-all uppercase tracking-widest text-xs sm:text-sm">
+        <span>&larr;</span> <span class="hidden sm:inline">Back to Home</span><span class="sm:hidden">Back</span>
       </button>
     </div>
-    <div class="flex-1 flex items-center justify-center pt-16">
+    <div class="flex-1 flex flex-col items-center justify-center pt-10 sm:pt-16 w-full max-w-full">
       <PhotoboothStudio />
     </div>
   </div>

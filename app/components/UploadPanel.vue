@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-[#f9f6f0] border-4 border-black p-5 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col relative w-full max-w-md mx-auto">
+  <div class="bg-[#f9f6f0] border-2 sm:border-4 border-black p-2 sm:p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col relative w-full max-w-[280px] sm:max-w-md mx-auto">
     <!-- Title Bar with Bulk Upload Action -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 font-display uppercase tracking-widest text-black text-sm border-b-4 border-black pb-3">
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-black shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 sm:mb-4 font-display uppercase tracking-widest text-black text-xs sm:text-sm border-b-2 sm:border-b-4 border-black pb-2 sm:pb-3">
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4-4m4 4v12" />
         </svg>
         <span>UNGGAH {{ slotsCount }} FOTO ANDA</span>

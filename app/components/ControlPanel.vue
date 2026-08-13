@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#f9f6f0] border-4 border-black p-6 flex flex-col justify-center gap-6 w-full max-w-sm mx-auto h-full min-h-[260px] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
+  <div class="bg-[#f9f6f0] border-4 border-black p-2 sm:p-6 flex flex-col justify-center gap-2 sm:gap-6 w-full max-w-sm mx-auto h-full sm:min-h-[260px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
     <!-- Step Indicator Header -->
     <div class="flex justify-between items-center text-sm text-black font-display tracking-widest uppercase border-b-4 border-black pb-2">
       <span>Langkah / Step</span>
@@ -11,8 +11,8 @@
       </span>
     </div>
 
-    <div class="text-center mb-2 border-4 border-black p-4 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-      <h3 class="font-display text-2xl text-black uppercase tracking-wider">
+    <div class="text-center mb-1 sm:mb-2 border-2 sm:border-4 border-black p-2 sm:p-4 bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <h3 class="font-display text-base sm:text-2xl text-black uppercase tracking-wider">
         <template v-if="isSelectFrame">Pilih Bingkai Foto</template>
         <template v-else-if="isSelectInput">Pilih Metode Foto</template>
         <template v-else-if="isRequesting">Membuka Kamera</template>
@@ -25,7 +25,7 @@
         <template v-else-if="isReview">Hasil Photostrip Kamu!</template>
         <template v-else-if="isExporting">Menyimpan Gambar...</template>
       </h3>
-      <p class="text-sm text-black font-serif italic mt-2 font-bold leading-relaxed border-t-2 border-black/20 pt-2">
+      <p class="hidden sm:block text-sm text-black font-serif italic mt-2 font-bold leading-relaxed border-t-2 border-black/20 pt-2">
         <template v-if="isSelectFrame">Pilih tema bingkai foto Anda (Klasik Vertikal, Kotak Grid, atau Lebar Horisontal) sebelum memotret.</template>
         <template v-else-if="isSelectInput">Ambil pose foto langsung menggunakan kamera webcam perangkat Anda, atau unggah foto yang sudah ada dari galeri.</template>
         <template v-else-if="isRequesting">Berikan izin kamera jika muncul petunjuk dari browser Anda.</template>
@@ -63,7 +63,7 @@
         v-if="isSelectFrame"
         @click="$emit('selectFrameNext')"
         aria-label="Lanjut ke pemilihan metode pengambilan foto"
-        class="w-full bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
+        class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
       >
         Lanjut &rarr;
       </button>
@@ -73,9 +73,9 @@
         <button
           @click="$emit('start')"
           aria-label="Mulai Foto menggunakan Kamera"
-          class="w-full bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-2"
+          class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-1 sm:gap-2"
         >
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
           </svg>
           Gunakan Kamera
@@ -83,9 +83,9 @@
         <button
           @click="$emit('startUpload')"
           aria-label="Mulai menggunakan Unggah Foto"
-          class="w-full bg-white text-black border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-2"
+          class="w-full bg-white text-black border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-1 sm:gap-2"
         >
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4-4m4 4v12" />
           </svg>
           Unggah File
@@ -93,7 +93,7 @@
         <button
           @click="$emit('cancelUpload')"
           aria-label="Kembali ke pemilihan bingkai"
-          class="w-full mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors"
+          class="w-full mt-1 sm:mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors text-xs sm:text-base"
         >
           &larr; Kembali
         </button>
@@ -104,9 +104,9 @@
         <button
           @click="$emit('captureClick')"
           aria-label="Ambil foto selfie"
-          class="w-full bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-2xl py-4 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-3"
+          class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-base sm:text-2xl py-1.5 sm:py-4 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center flex items-center justify-center gap-1.5 sm:gap-3"
         >
-          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
           </svg>
@@ -117,7 +117,7 @@
           v-if="isAllCaptured"
           @click="$emit('processUpload')"
           aria-label="Proses hasil foto menjadi photostrip"
-          class="w-full bg-red-600 text-white border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
+          class="w-full bg-red-600 text-white border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
         >
           Proses Photostrip
         </button>
@@ -125,7 +125,7 @@
         <button
           @click="$emit('cancelUpload')"
           aria-label="Kembali ke menu pemilihan metode"
-          class="w-full mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors"
+          class="w-full mt-1 sm:mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors text-xs sm:text-base"
         >
           &larr; Kembali
         </button>
@@ -136,14 +136,14 @@
         <button
           @click="$emit('confirmPhoto')"
           aria-label="Konfirmasi dan simpan foto ini"
-          class="w-full bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
+          class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
         >
           Simpan Foto
         </button>
         <button
           @click="$emit('retry')"
           aria-label="Ambil ulang pose untuk slot ini"
-          class="w-full bg-[#f9f6f0] text-black border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
+          class="w-full bg-[#f9f6f0] text-black border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
         >
           Foto Ulang
         </button>
@@ -216,9 +216,9 @@
         <button
           @click="$emit('saveToCloud')"
           aria-label="Simpan ke Cloud & Unduh"
-          class="w-full bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl py-4 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer flex items-center justify-center gap-3 text-center"
+          class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-2 sm:py-4 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer flex items-center justify-center gap-1.5 sm:gap-3 text-center"
         >
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
           SIMPAN & UNDUH
@@ -228,9 +228,9 @@
           v-if="canShare"
           @click="$emit('share')"
           aria-label="Bagikan Foto"
-          class="w-full bg-[#f9f6f0] text-black border-4 border-black font-display uppercase tracking-widest text-xl py-3 px-6 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer flex items-center justify-center gap-3 text-center"
+          class="w-full bg-[#f9f6f0] text-black border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer flex items-center justify-center gap-1.5 sm:gap-3 text-center"
         >
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.684-2.342m0 5.2l-4.684-2.342M19 12a3 3 0 11-6 0 3 3 0 016 0zM6 6a3 3 0 11-6 0 3 3 0 016 0zm0 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           BAGIKAN
@@ -239,7 +239,7 @@
         <button
           @click="$emit('retake')"
           aria-label="Mulai Baru (Reset Semua)"
-          class="w-full mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors"
+          class="w-full mt-1 sm:mt-2 text-black font-serif italic font-bold border-b-2 border-black pb-0.5 self-center hover:text-red-600 transition-colors text-xs sm:text-base"
         >
           &larr; Mulai Baru
         </button>

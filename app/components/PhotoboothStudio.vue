@@ -33,24 +33,24 @@
 
     <!-- Step 1 Layout: Full-Screen Template Selection Grid -->
     <div v-else-if="isSelectFrame" class="flex flex-col items-center w-full max-w-5xl mx-auto">
-      <div class="text-center space-y-4 max-w-4xl mx-auto mb-12">
-        <h1 class="text-5xl sm:text-7xl font-display text-black uppercase tracking-wider leading-[0.9]">
+      <div class="text-center space-y-2 sm:space-y-4 max-w-4xl mx-auto mb-8 sm:mb-12">
+        <h1 class="text-4xl sm:text-6xl font-display text-black uppercase tracking-wider leading-[1.1] sm:leading-[0.9]">
           Pilih Bingkai<br/>Foto
         </h1>
-        <p class="text-lg sm:text-xl text-black font-serif italic font-bold">
+        <p class="text-base sm:text-xl text-black font-serif italic font-bold px-4">
           Pilih template bingkai eksklusif favoritmu untuk memulai sesi photobooth bertema khusus.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full justify-center px-4 max-w-5xl">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 w-full justify-center px-4 max-w-5xl">
         <button
           v-for="frame in framesList"
           :key="frame.id"
           @click="selectFrame(frame.id, frame.slots.length)"
-          class="flex flex-col text-left bg-[#f9f6f0] border-4 border-black transition-all duration-300 w-full focus:outline-none relative group cursor-pointer"
-          :class="frame.id === state.activeFrameId ? 'shadow-none translate-y-2 translate-x-2 border-red-600 bg-[#fffbe6]' : 'shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'"
+          class="flex flex-col text-left bg-[#f9f6f0] border-4 border-black transition-all duration-300 w-full focus:outline-none relative group cursor-pointer max-w-[280px] sm:max-w-none mx-auto"
+          :class="frame.id === state.activeFrameId ? 'shadow-none translate-y-2 translate-x-2 border-red-600 bg-[#fffbe6]' : 'shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'"
         >
-          <div class="w-full aspect-[4/5] bg-neutral-200 relative flex items-center justify-center p-6 border-b-4 border-black overflow-hidden">
+          <div class="w-full aspect-[4/5] bg-neutral-200 relative flex items-center justify-center p-4 sm:p-6 border-b-4 border-black overflow-hidden">
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(black_2px,transparent_2px)] [background-size:16px_16px]" />
             <div
               class="h-full relative overflow-hidden flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105 bg-white"
@@ -75,30 +75,30 @@
 
       <button
         @click="state.status = 'SELECT_INPUT_MODE'"
-        class="mt-16 bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-2xl sm:text-4xl py-4 px-12 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:translate-x-1 active:shadow-none cursor-pointer text-center group"
+        class="mt-10 sm:mt-16 bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl sm:text-3xl py-3 sm:py-4 px-8 sm:px-12 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:translate-x-1 active:shadow-none cursor-pointer text-center group"
       >
-        <span class="group-hover:text-yellow-300 transition-colors">Lanjut ke Studio Foto &rarr;</span>
+        <span class="group-hover:text-yellow-300 transition-colors">Lanjut &rarr;</span>
       </button>
     </div>
 
     <!-- Step 2, 3, 4 Layout: Studio Columns -->
     <div v-else class="flex flex-col items-center w-full">
-      <div class="text-center space-y-4 max-w-4xl mx-auto mb-10 px-4">
-        <h1 class="text-5xl sm:text-7xl font-display text-black uppercase tracking-wider leading-[0.9] border-b-4 border-black pb-4 inline-block">
+      <div class="text-center space-y-1 sm:space-y-4 max-w-4xl mx-auto mb-2 sm:mb-10 px-4 shrink-0">
+        <h1 class="text-3xl sm:text-6xl font-display text-black uppercase tracking-wider leading-[0.9] border-b-2 sm:border-b-4 border-black pb-1 sm:pb-4 inline-block mt-2 sm:mt-0">
           Studio Foto
         </h1>
-        <p class="text-lg sm:text-xl text-black font-serif italic font-bold">
-          Ambil pose ter-kece kamu dan abadikan kenangan manis ini ke dalam bingkai eksklusif pilihanmu!
+        <p class="hidden sm:block text-sm sm:text-xl text-black font-serif italic font-bold">
+          Ambil pose ter-kece kamu dan abadikan kenangan manis ini!
         </p>
       </div>
 
-      <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-8 items-start justify-center flex-1 px-2">
+      <div class="w-full max-w-6xl flex flex-col md:grid md:grid-cols-12 gap-4 sm:gap-8 items-center justify-center flex-1 px-2 pb-4 md:pb-0">
         
         <!-- Left Column: Camera/Upload Preview, Steps Guide, or Export Help -->
-        <div :class="`md:col-span-4 flex justify-center w-full ${leftColOrder}`">
-          <div v-if="isSelectInput" class="bg-[#e8e4db] p-6 border-4 border-black text-left w-full max-w-md shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
-            <div class="absolute -top-4 left-6 bg-black text-white px-3 py-1 font-display tracking-widest uppercase text-sm border-2 border-white">Panduan</div>
-            <ul class="text-black font-serif text-lg space-y-4 leading-relaxed mt-2">
+        <div :class="`md:col-span-4 hidden md:flex justify-center w-full ${leftColOrder}`">
+          <div v-if="isSelectInput" class="bg-[#e8e4db] p-4 sm:p-6 border-4 border-black text-left w-full max-w-sm sm:max-w-md shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative mt-4">
+            <div class="absolute -top-4 left-4 sm:left-6 bg-black text-white px-2 py-1 font-display tracking-widest uppercase text-xs sm:text-sm border-2 border-white">Panduan</div>
+            <ul class="text-black font-serif text-sm sm:text-lg space-y-3 sm:space-y-4 leading-relaxed mt-2">
               <li class="flex gap-3 border-b-2 border-black/10 pb-2">
                 <span class="font-display text-2xl mt-0.5">1</span>
                 <span><strong>Pilih Bingkai</strong>: (Selesai)</span>
@@ -122,6 +122,7 @@
             :photos="state.capturedPhotos"
             @photoUploaded="onPhotoUploaded"
             @photoRemoved="onPhotoRemoved"
+            class="hidden md:flex"
           />
           <WebcamPreview
             v-else-if="!isReview"
@@ -131,10 +132,11 @@
             :photoIndex="state.photoIndex"
             :countdown="state.countdown"
             :capturedPhotos="state.capturedPhotos"
+            class="hidden md:flex"
           />
-          <div v-else class="bg-[#e8e4db] p-6 border-4 border-black text-left w-full max-w-md shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
-            <div class="absolute -top-4 left-6 bg-black text-white px-3 py-1 font-display tracking-widest uppercase text-sm border-2 border-white">Panduan Ekspor</div>
-            <ul class="text-black font-serif text-lg space-y-4 leading-relaxed mt-2">
+          <div v-else class="bg-[#e8e4db] p-4 sm:p-6 border-4 border-black text-left w-full max-w-sm sm:max-w-md shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative mt-4">
+            <div class="absolute -top-4 left-4 sm:left-6 bg-black text-white px-2 py-1 font-display tracking-widest uppercase text-xs sm:text-sm border-2 border-white">Panduan Ekspor</div>
+            <ul class="text-black font-serif text-sm sm:text-lg space-y-3 sm:space-y-4 leading-relaxed mt-2">
               <li class="flex gap-3 border-b-2 border-black/10 pb-2">
                 <span class="font-display text-2xl mt-0.5">1</span>
                 <span>Klik <strong>Simpan ke Cloud & Unduh</strong> untuk menyimpan format PNG.</span>
@@ -152,17 +154,38 @@
         </div>
 
         <!-- Center Column: Photostrip Canvas / Placeholder -->
-        <div :class="`md:col-span-4 flex justify-center w-full ${centerColOrder}`">
-          <div v-if="isReview" class="flex flex-col items-center">
+        <div :class="`md:col-span-4 flex justify-center w-full relative ${centerColOrder}`">
+          <!-- MOBILE ONLY COMPONENT PREVIEWS (Moved from left column to main center on mobile) -->
+          <div class="md:hidden flex items-center justify-center w-full mb-4">
+            <UploadPanel
+              v-if="isUploadPreview"
+              :photos="state.capturedPhotos"
+              @photoUploaded="onPhotoUploaded"
+              @photoRemoved="onPhotoRemoved"
+              class="w-full"
+            />
+            <WebcamPreview
+              v-else-if="!isReview && !isSelectInput"
+              ref="webcamPreviewRef"
+              :state="state.status"
+              :stream="state.stream"
+              :photoIndex="state.photoIndex"
+              :countdown="state.countdown"
+              :capturedPhotos="state.capturedPhotos"
+              class="w-full"
+            />
+          </div>
+
+          <div v-if="isReview" class="flex flex-col items-center w-full justify-center">
             <canvas
               ref="canvasRef"
-              class="w-full h-auto max-w-[280px] md:max-w-[320px] max-h-[75vh] border-8 border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] bg-white transition-transform hover:-translate-y-2 hover:-translate-x-2 duration-300"
+              class="w-full max-w-[260px] h-auto md:max-w-none md:max-h-[75vh] border-[6px] sm:border-8 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] bg-white transition-transform hover:-translate-y-2 hover:-translate-x-2 duration-300 mx-auto"
               :style="{ aspectRatio: `${activeFrame?.canvasWidth} / ${activeFrame?.canvasHeight}` }"
             ></canvas>
           </div>
           <div
             v-else-if="activeFrame"
-            class="relative w-full max-w-[280px] md:max-w-[320px] max-h-[75vh] border-8 border-black shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-[#e8e4db] flex flex-col select-none transition-all duration-300 mx-auto"
+            class="relative w-full max-w-[260px] h-auto md:max-w-none md:max-h-[75vh] border-[6px] sm:border-8 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-[#e8e4db] flex flex-col select-none transition-all duration-300 mx-auto hidden md:flex"
             :style="{ aspectRatio: `${activeFrame.canvasWidth} / ${activeFrame.canvasHeight}` }"
           >
             <div class="absolute inset-0 bg-neutral-50 bg-[radial-gradient(#e5e7eb_1.5px,transparent_1.5px)] [background-size:16px_16px]" style="z-index: 1" />
