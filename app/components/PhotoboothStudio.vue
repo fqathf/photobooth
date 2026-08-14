@@ -2,8 +2,8 @@
   <div class="flex flex-col items-center w-full">
     <!-- Show Loading Spinner while loading settings -->
     <div v-if="loadingSettings || (!activeFrame && framesList.length === 0)" class="flex flex-col items-center justify-center min-h-[400px] w-full text-center">
-      <div class="w-12 h-12 rounded-full border-4 border-[var(--color-primary-light)] border-t-[var(--color-primary)] animate-spin mb-4" />
-      <p class="text-sm text-[var(--text-secondary)] font-body animate-pulse">Menghubungkan ke Studio Foto...</p>
+      <div class="w-12 h-12 bg-black border-4 border-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] animate-spin mb-6"></div>
+      <p class="text-xl text-black font-display uppercase tracking-widest animate-pulse">Memuat Studio...</p>
     </div>
 
     <!-- Show Event Inactive State if disabled by Admin -->
@@ -23,12 +23,14 @@
     </div>
 
     <!-- Guard: no frames available at all -->
-    <div v-else-if="framesList.length === 0" class="flex flex-col items-center justify-center text-center max-w-lg mx-auto py-16 px-4 gap-4">
-      <div class="p-4 rounded-2xl bg-pink-50 border border-pink-200 text-pink-700 text-sm">
-        <p class="font-bold mb-1">Belum Ada Template Bingkai</p>
-        <p>Admin belum menambahkan template bingkai foto. Silakan tambahkan melalui <strong>Admin &gt; Photobooth &gt; Tambah Template Bingkai PNG</strong>.</p>
+    <div v-else-if="framesList.length === 0" class="flex flex-col items-center justify-center text-center max-w-lg mx-auto py-16 px-4 gap-6">
+      <div class="p-6 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-black text-left">
+        <h3 class="font-display uppercase tracking-widest text-2xl border-b-4 border-black pb-2 mb-4">BELUM ADA BINGKAI</h3>
+        <p class="font-serif italic font-bold text-lg">Admin belum menambahkan template bingkai foto. Silakan login ke halaman Admin untuk mengunggah template bingkai PNG.</p>
       </div>
-      <a href="/" class="text-[var(--color-primary)] font-bold text-sm hover:underline">← Kembali ke Beranda</a>
+      <a href="/" class="bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest px-6 py-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+        &larr; KEMBALI
+      </a>
     </div>
 
     <!-- Step 1 Layout: Full-Screen Template Selection Grid -->
@@ -42,43 +44,45 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 w-full justify-center px-4 max-w-5xl">
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-10 w-full justify-center px-2 sm:px-4 max-w-5xl pb-24 sm:pb-32">
         <button
           v-for="frame in framesList"
           :key="frame.id"
           @click="selectFrame(frame.id, frame.slots.length)"
-          class="flex flex-col text-left bg-[#f9f6f0] border-4 border-black transition-all duration-300 w-full focus:outline-none relative group cursor-pointer max-w-[280px] sm:max-w-none mx-auto"
-          :class="frame.id === state.activeFrameId ? 'shadow-none translate-y-2 translate-x-2 border-red-600 bg-[#fffbe6]' : 'shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'"
+          class="flex flex-col text-left bg-[#f9f6f0] border-2 sm:border-4 border-black transition-all duration-300 w-full focus:outline-none relative group cursor-pointer max-w-none mx-auto"
+          :class="frame.id === state.activeFrameId ? 'shadow-none translate-y-1 translate-x-1 sm:translate-y-2 sm:translate-x-2 border-red-600 bg-[#fffbe6]' : 'shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'"
         >
-          <div class="w-full aspect-[4/5] bg-neutral-200 relative flex items-center justify-center p-4 sm:p-6 border-b-4 border-black overflow-hidden">
+          <div class="w-full aspect-[4/5] bg-neutral-200 relative flex items-center justify-center p-2 sm:p-6 border-b-2 sm:border-b-4 border-black overflow-hidden">
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(black_2px,transparent_2px)] [background-size:16px_16px]" />
             <div
-              class="h-full relative overflow-hidden flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105 bg-white"
+              class="h-full relative overflow-hidden flex items-center justify-center border-2 sm:border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105 bg-white"
               :style="{ aspectRatio: `${frame.canvasWidth} / ${frame.canvasHeight}` }"
             >
               <img :src="frame.thumbnail ?? frame.src" :alt="frame.name" class="w-full h-full object-cover grayscale mix-blend-multiply opacity-90" />
             </div>
-            <div class="absolute top-2 left-2 bg-black text-[#f9f6f0] text-[10px] font-display px-3 py-1 uppercase tracking-widest border-2 border-[#f9f6f0]">
+            <div class="absolute top-1 left-1 sm:top-2 sm:left-2 bg-black text-[#f9f6f0] text-[8px] sm:text-[10px] font-display px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-widest border border-[#f9f6f0]">
               Exclusive
             </div>
           </div>
-          <div class="p-4 w-full flex flex-col bg-inherit">
-            <h3 class="font-display text-2xl text-black group-hover:text-red-600 transition-colors line-clamp-1 mb-1 uppercase tracking-wide">
+          <div class="p-2 sm:p-4 w-full flex flex-col bg-inherit">
+            <h3 class="font-display text-base sm:text-2xl text-black group-hover:text-red-600 transition-colors line-clamp-1 sm:line-clamp-2 mb-1 uppercase tracking-wide">
               {{ frame.name }}
             </h3>
-            <div class="flex items-center gap-2 text-sm text-black font-serif font-bold italic border-t-2 border-black/20 pt-2 mt-2">
+            <div class="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-black font-serif font-bold italic border-t-2 border-black/20 pt-1.5 sm:pt-2 mt-1 sm:mt-2">
               <span>&#9654; {{ frame.slots.length }} PHOTOS</span>
             </div>
           </div>
         </button>
       </div>
 
-      <button
-        @click="state.status = 'SELECT_INPUT_MODE'"
-        class="mt-10 sm:mt-16 bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl sm:text-3xl py-3 sm:py-4 px-8 sm:px-12 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:translate-x-1 active:shadow-none cursor-pointer text-center group"
-      >
-        <span class="group-hover:text-yellow-300 transition-colors">Lanjut &rarr;</span>
-      </button>
+      <div v-if="state.activeFrameId" class="fixed bottom-4 sm:bottom-8 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-50 flex justify-center">
+        <button
+          @click="state.status = 'SELECT_INPUT_MODE'"
+          class="w-full sm:w-auto sm:min-w-[400px] bg-black text-[#f9f6f0] border-4 border-black font-display uppercase tracking-widest text-xl sm:text-3xl py-3 sm:py-4 px-8 sm:px-16 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:translate-x-1 active:shadow-none cursor-pointer text-center group"
+        >
+          <span class="group-hover:text-yellow-300 transition-colors">Lanjut &rarr;</span>
+        </button>
+      </div>
     </div>
 
     <!-- Step 2, 3, 4 Layout: Studio Columns -->
@@ -156,7 +160,7 @@
         <!-- Center Column: Photostrip Canvas / Placeholder -->
         <div :class="`md:col-span-4 flex justify-center w-full relative ${centerColOrder}`">
           <!-- MOBILE ONLY COMPONENT PREVIEWS (Moved from left column to main center on mobile) -->
-          <div class="md:hidden flex items-center justify-center w-full mb-4">
+          <div v-if="!isReview && !isSelectInput" class="md:hidden flex items-center justify-center w-full mb-4 sticky top-2 z-40">
             <UploadPanel
               v-if="isUploadPreview"
               :photos="state.capturedPhotos"
@@ -172,6 +176,10 @@
               :photoIndex="state.photoIndex"
               :countdown="state.countdown"
               :capturedPhotos="state.capturedPhotos"
+              :photoScale="state.photoScales[state.photoIndex]"
+              :photoOffsetX="state.photoOffsetsX[state.photoIndex]"
+              :photoOffsetY="state.photoOffsetsY[state.photoIndex]"
+              @offsetChange="(dx, dy) => handleMobileDrag(dx, dy)"
               class="w-full"
             />
           </div>
@@ -202,6 +210,8 @@
                 v-for="(slot, idx) in activeFrame.slots"
                 :key="idx"
                 @click="handleSlotClick(idx)"
+                @mousedown="(e) => handleDragStart(e, idx)"
+                @touchstart.passive="(e) => handleDragStart(e, idx)"
                 class="absolute flex items-center justify-center overflow-hidden text-xs font-bold transition-all duration-300 bg-black/10 text-black border-4 border-dashed border-black/30"
                 :class="isSlotClickable(idx) ? 'cursor-pointer pointer-events-auto hover:bg-black/20' : 'pointer-events-none'"
                 :style="{
@@ -223,8 +233,7 @@
                   alt=""
                   class="w-full h-full object-cover transition-transform duration-100"
                   :style="{
-                    transform: `scale(${state.photoScales[idx] || 1.0})`,
-                    scale: state.inputMode === 'camera' ? '-1 1' : '1 1'
+                    transform: `scaleX(${state.inputMode === 'camera' ? -1 : 1}) translate(${state.photoOffsetsX[idx] || 0}%, ${state.photoOffsetsY[idx] || 0}%) scale(${state.photoScales[idx] || 1.0})`
                   }"
                 />
                 <template v-else>
@@ -259,6 +268,7 @@
             @captureClick="startCountdown"
             @confirmPhoto="confirmPhoto"
             @scaleChange="updateScale"
+            @selectSlot="handleSlotClick"
           />
         </div>
 
@@ -282,6 +292,8 @@ interface State {
   stream: MediaStream | null;
   capturedPhotos: string[];
   photoScales: number[];
+  photoOffsetsX: number[];
+  photoOffsetsY: number[];
   photoIndex: number;
   countdown: number;
   activeFrameId: string;
@@ -294,6 +306,8 @@ const state = reactive<State>({
   stream: null,
   capturedPhotos: [],
   photoScales: [],
+  photoOffsetsX: [],
+  photoOffsetsY: [],
   photoIndex: 0,
   countdown: 0,
   activeFrameId: "",
@@ -374,6 +388,8 @@ const selectFrame = (frameId: string, slotsCount: number) => {
   state.activeFrameId = frameId;
   state.capturedPhotos = Array(slotsCount).fill("");
   state.photoScales = Array(slotsCount).fill(1.0);
+  state.photoOffsetsX = Array(slotsCount).fill(0);
+  state.photoOffsetsY = Array(slotsCount).fill(0);
   state.photoIndex = 0;
 };
 
@@ -384,6 +400,8 @@ const startCaptureSequence = async () => {
   state.errorMsg = "";
   state.capturedPhotos = Array(slotsCount).fill("");
   state.photoScales = Array(slotsCount).fill(1.0);
+  state.photoOffsetsX = Array(slotsCount).fill(0);
+  state.photoOffsetsY = Array(slotsCount).fill(0);
   state.photoIndex = 0;
   state.countdown = 0;
 
@@ -405,6 +423,8 @@ const startUploadSequence = () => {
   state.inputMode = "upload";
   state.capturedPhotos = Array(slotsCount).fill("");
   state.photoScales = Array(slotsCount).fill(1.0);
+  state.photoOffsetsX = Array(slotsCount).fill(0);
+  state.photoOffsetsY = Array(slotsCount).fill(0);
   state.photoIndex = 0;
   state.countdown = 0;
   state.errorMsg = "";
@@ -417,6 +437,8 @@ const onPhotoUploaded = (index: number, dataUrl: string) => {
 const onPhotoRemoved = (index: number) => {
   state.capturedPhotos[index] = "";
   state.photoScales[index] = 1.0;
+  state.photoOffsetsX[index] = 0;
+  state.photoOffsetsY[index] = 0;
   if (state.status === "CONFIRM_CAPTURE") {
     state.status = "LIVE_PREVIEW";
   }
@@ -429,11 +451,15 @@ const cancelUpload = () => {
     state.inputMode = null;
     state.capturedPhotos = [];
     state.photoScales = Array(slotsCount).fill(1.0);
+    state.photoOffsetsX = Array(slotsCount).fill(0);
+    state.photoOffsetsY = Array(slotsCount).fill(0);
   } else {
     state.status = "SELECT_INPUT_MODE";
     state.inputMode = null;
     state.capturedPhotos = [];
     state.photoScales = Array(slotsCount).fill(1.0);
+    state.photoOffsetsX = Array(slotsCount).fill(0);
+    state.photoOffsetsY = Array(slotsCount).fill(0);
   }
 };
 
@@ -468,16 +494,29 @@ const capturePhoto = () => {
         tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
         const dataUrl = tempCanvas.toDataURL("image/png");
         state.capturedPhotos[state.photoIndex] = dataUrl;
-        state.status = "CONFIRM_CAPTURE";
+        
+        const nextEmpty = state.capturedPhotos.findIndex(p => !p);
+        
+        if (nextEmpty !== -1) {
+          state.photoIndex = nextEmpty;
+          state.status = "LIVE_PREVIEW";
+        } else {
+          state.status = "CONFIRM_CAPTURE";
+        }
       }
     }
   }, 250);
 };
 
 const confirmPhoto = () => {
-  const slotsCount = activeFrame.value ? activeFrame.value.slots.length : 4;
-  if (state.photoIndex < slotsCount - 1) {
-    state.photoIndex++;
+  if (isAllCaptured.value) {
+    state.status = "REVIEW";
+    return;
+  }
+  
+  const nextEmpty = state.capturedPhotos.findIndex(p => !p);
+  if (nextEmpty !== -1) {
+    state.photoIndex = nextEmpty;
   }
   state.status = "LIVE_PREVIEW";
 };
@@ -485,6 +524,8 @@ const confirmPhoto = () => {
 const retryPhoto = () => {
   state.capturedPhotos[state.photoIndex] = "";
   state.photoScales[state.photoIndex] = 1.0;
+  state.photoOffsetsX[state.photoIndex] = 0;
+  state.photoOffsetsY[state.photoIndex] = 0;
   state.status = "LIVE_PREVIEW";
 };
 
@@ -496,6 +537,8 @@ const handleRetake = () => {
   state.status = "SELECT_FRAME";
   state.capturedPhotos = [];
   state.photoScales = [];
+  state.photoOffsetsX = [];
+  state.photoOffsetsY = [];
   state.photoIndex = 0;
   state.countdown = 0;
   state.inputMode = null;
@@ -608,6 +651,103 @@ const showZoomSlider = computed(() => state.status === "CONFIRM_CAPTURE" || (sta
 const currentScale = computed(() => state.photoScales[state.photoIndex] || 1.0);
 
 const updateScale = (scale: number) => {
-  state.photoScales[state.photoIndex] = scale;
+  if (state.photoIndex > -1) {
+    state.photoScales[state.photoIndex] = scale;
+    clampOffset(state.photoIndex);
+  }
+};
+
+const clampOffset = (idx: number) => {
+  const scale = state.photoScales[idx] || 1.0;
+  const maxOffset = ((scale - 1) / 2) * 100;
+  
+  if (state.photoOffsetsX[idx] !== undefined) {
+    state.photoOffsetsX[idx] = Math.max(-maxOffset, Math.min(maxOffset, state.photoOffsetsX[idx]));
+  }
+  if (state.photoOffsetsY[idx] !== undefined) {
+    state.photoOffsetsY[idx] = Math.max(-maxOffset, Math.min(maxOffset, state.photoOffsetsY[idx]));
+  }
+};
+
+// --- DRAG LOGIC (Desktop / PhotoboothStudio) ---
+const dragState = {
+  isDragging: false,
+  slotIdx: -1,
+  startX: 0,
+  startY: 0,
+  initialOffsetX: 0,
+  initialOffsetY: 0,
+  containerWidth: 0,
+  containerHeight: 0
+};
+
+const handleDragStart = (e: MouseEvent | TouchEvent, idx: number) => {
+  if (state.status !== 'CONFIRM_CAPTURE' || state.photoIndex !== idx) return;
+  const scale = state.photoScales[idx] || 1.0;
+  if (scale <= 1.0) return; // Only allow drag if zoomed in
+  
+  dragState.isDragging = true;
+  dragState.slotIdx = idx;
+  
+  const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+  
+  dragState.startX = clientX;
+  dragState.startY = clientY;
+  
+  dragState.initialOffsetX = state.photoOffsetsX[idx] || 0;
+  dragState.initialOffsetY = state.photoOffsetsY[idx] || 0;
+  
+  const target = e.currentTarget as HTMLElement;
+  dragState.containerWidth = target.clientWidth;
+  dragState.containerHeight = target.clientHeight;
+
+  window.addEventListener('mousemove', handleDragMove);
+  window.addEventListener('touchmove', handleDragMove, { passive: false });
+  window.addEventListener('mouseup', handleDragEnd);
+  window.addEventListener('touchend', handleDragEnd);
+};
+
+const handleDragMove = (e: MouseEvent | TouchEvent) => {
+  if (!dragState.isDragging) return;
+  
+  // Prevent scrolling on mobile while dragging
+  if ('touches' in e && e.cancelable) {
+    e.preventDefault();
+  }
+  
+  const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+  
+  const dx = clientX - dragState.startX;
+  const dy = clientY - dragState.startY;
+  
+  let px = dragState.initialOffsetX + (dx / dragState.containerWidth) * 100;
+  let py = dragState.initialOffsetY + (dy / dragState.containerHeight) * 100;
+  
+  // If camera is mirrored, invert dx
+  if (state.inputMode === 'camera') {
+    px = dragState.initialOffsetX - (dx / dragState.containerWidth) * 100;
+  }
+  
+  state.photoOffsetsX[dragState.slotIdx] = px;
+  state.photoOffsetsY[dragState.slotIdx] = py;
+  clampOffset(dragState.slotIdx);
+};
+
+const handleDragEnd = () => {
+  dragState.isDragging = false;
+  window.removeEventListener('mousemove', handleDragMove);
+  window.removeEventListener('touchmove', handleDragMove);
+  window.removeEventListener('mouseup', handleDragEnd);
+  window.removeEventListener('touchend', handleDragEnd);
+};
+
+// --- DRAG LOGIC (Mobile / WebcamPreview) ---
+const handleMobileDrag = (px: number, py: number) => {
+  if (state.status !== 'CONFIRM_CAPTURE') return;
+  state.photoOffsetsX[state.photoIndex] = px;
+  state.photoOffsetsY[state.photoIndex] = py;
+  clampOffset(state.photoIndex);
 };
 </script>

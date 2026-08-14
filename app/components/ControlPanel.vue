@@ -112,15 +112,6 @@
           </svg>
           AMBIL FOTO
         </button>
-        
-        <button
-          v-if="isAllCaptured"
-          @click="$emit('processUpload')"
-          aria-label="Proses hasil foto menjadi photostrip"
-          class="w-full bg-red-600 text-white border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
-        >
-          Proses Photostrip
-        </button>
 
         <button
           @click="$emit('cancelUpload')"
@@ -133,12 +124,23 @@
 
       <!-- Step 3 (Camera): Confirm Capture -->
       <template v-if="isConfirmCapture">
+        <div v-if="isAllCaptured" class="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 w-full">
+          <button
+            v-for="i in slotsCount"
+            :key="i"
+            @click="$emit('selectSlot', i - 1)"
+            :class="photoIndex === i - 1 ? 'bg-black text-white border-black' : 'bg-white text-black border-black/30 hover:border-black'"
+            class="px-2 py-1 sm:px-3 sm:py-1.5 font-display text-xs sm:text-sm border-2 transition-colors flex-1 min-w-[60px]"
+          >
+            FOTO {{ i }}
+          </button>
+        </div>
         <button
           @click="$emit('confirmPhoto')"
           aria-label="Konfirmasi dan simpan foto ini"
-          class="w-full bg-black text-[#f9f6f0] border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center"
+          :class="['w-full border-2 sm:border-4 border-black font-display uppercase tracking-widest text-sm sm:text-xl py-1.5 sm:py-3 px-2 sm:px-6 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:translate-x-1.5 active:translate-y-1.5 active:shadow-none cursor-pointer text-center', isAllCaptured ? 'bg-red-600 text-white' : 'bg-black text-[#f9f6f0]']"
         >
-          Simpan Foto
+          {{ isAllCaptured ? 'PROSES PHOTOSTRIP' : 'SIMPAN FOTO' }}
         </button>
         <button
           @click="$emit('retry')"
@@ -286,6 +288,7 @@ defineEmits<{
   (e: 'captureClick'): void;
   (e: 'confirmPhoto'): void;
   (e: 'scaleChange', scale: number): void;
+  (e: 'selectSlot', idx: number): void;
 }>();
 
 const isSelectFrame = computed(() => props.state === "SELECT_FRAME");

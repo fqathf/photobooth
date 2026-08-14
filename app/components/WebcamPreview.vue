@@ -30,7 +30,11 @@
         v-if="confirmPhoto && !showVideo"
         :src="capturedPhotos[photoIndex]"
         :alt="`Foto ${photoIndex + 1}`"
-        class="w-full h-full object-cover scale-x-[-1] absolute inset-0"
+        @mousedown="handleDragStart"
+        @touchstart.passive="handleDragStart"
+        class="w-full h-full object-cover absolute inset-0 transition-transform duration-100"
+        :class="{'cursor-grab': (photoScale || 1.0) > 1.0, 'cursor-grabbing': isDragging}"
+        :style="{ transform: `scaleX(-1) translate(${photoOffsetX || 0}%, ${photoOffsetY || 0}%) scale(${photoScale || 1.0})` }"
       />
 
       <!-- Standby/Error placeholder when neither video nor captured image should show -->
@@ -83,6 +87,13 @@ const props = defineProps<{
   photoIndex: number;
   countdown: number;
   capturedPhotos: string[];
+  photoScale?: number;
+  photoOffsetX?: number;
+  photoOffsetY?: number;
+}>();
+
+const emit = defineEmits<{
+  (e: 'offsetChange', px: number, py: number): void;
 }>();
 
 const videoRef = ref<HTMLVideoElement | null>(null);
@@ -104,6 +115,64 @@ const showCountdown = computed(() => props.state === "COUNTDOWN" && props.countd
 const showFlash = computed(() => props.state === "CAPTURING");
 const showConfirm = computed(() => props.state === "CONFIRM_CAPTURE");
 const confirmPhoto = computed(() => showConfirm.value && props.capturedPhotos && props.capturedPhotos[props.photoIndex]);
+
+// --- Drag Logic ---
+const isDragging = ref(false);
+const dragState = {
+  startX: 0,
+  startY: 0,
+  initialOffsetX: 0,
+  initialOffsetY: 0,
+  containerWidth: 0,
+  containerHeight: 0
+};
+
+const handleDragStart = (e: MouseEvent | TouchEvent) => {
+  if (!confirmPhoto.value || (props.photoScale || 1.0) <= 1.0) return;
+  
+  isDragging.value = true;
+  const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+  
+  dragState.startX = clientX;
+  dragState.startY = clientY;
+  dragState.initialOffsetX = props.photoOffsetX || 0;
+  dragState.initialOffsetY = props.photoOffsetY || 0;
+  
+  const target = e.currentTarget as HTMLElement;
+  dragState.containerWidth = target.clientWidth;
+  dragState.containerHeight = target.clientHeight;
+  
+  window.addEventListener('mousemove', handleDragMove);
+  window.addEventListener('touchmove', handleDragMove, { passive: false });
+  window.addEventListener('mouseup', handleDragEnd);
+  window.addEventListener('touchend', handleDragEnd);
+};
+
+const handleDragMove = (e: MouseEvent | TouchEvent) => {
+  if (!isDragging.value) return;
+  if ('touches' in e && e.cancelable) e.preventDefault();
+  
+  const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+  const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+  
+  const dx = clientX - dragState.startX;
+  const dy = clientY - dragState.startY;
+  
+  // WebcamPreview is mirrored, so invert dx
+  const px = dragState.initialOffsetX - (dx / dragState.containerWidth) * 100;
+  const py = dragState.initialOffsetY + (dy / dragState.containerHeight) * 100;
+  
+  emit('offsetChange', px, py);
+};
+
+const handleDragEnd = () => {
+  isDragging.value = false;
+  window.removeEventListener('mousemove', handleDragMove);
+  window.removeEventListener('touchmove', handleDragMove);
+  window.removeEventListener('mouseup', handleDragEnd);
+  window.removeEventListener('touchend', handleDragEnd);
+};
 
 defineExpose({
   videoRef
