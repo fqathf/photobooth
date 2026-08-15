@@ -1,4 +1,4 @@
-# Make Memories with Ella - Virtual Photobooth
+# Virtual Photobooth App
 
 A vintage-style, brutalist web application for a virtual photobooth event. Built with Nuxt 3, TailwindCSS, and Cloudflare Pages (D1 Database & R2 Storage).
 
@@ -18,7 +18,7 @@ A vintage-style, brutalist web application for a virtual photobooth event. Built
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/fqathf/photobooth.git
+   git clone https://github.com/your-username/photobooth.git
    cd photobooth
    ```
 
@@ -66,7 +66,7 @@ A vintage-style, brutalist web application for a virtual photobooth event. Built
 
 4. **Set Production Secrets**
    Set your admin password in the Cloudflare Pages environment variables.
-   Go to **Cloudflare Dashboard > Pages > makememorieswithella > Settings > Environment variables**, add `ADMIN_PASSWORD`, and set it to a secure password. Then click Encrypt and Save.
+   Go to **Cloudflare Dashboard > Pages > your-project-name > Settings > Environment variables**, add `ADMIN_PASSWORD`, and set it to a secure password. Then click Encrypt and Save.
 
 5. **Deploy!**
    ```bash

@@ -31,3 +31,11 @@ logs
 
 # Lock files (using bun)
 package-lock.json
+
+# Local env for Cloudflare Pages
+.dev.vars
+!.dev.vars.example
+
+# Mock images in root
+/*.jpeg
+/*.png
