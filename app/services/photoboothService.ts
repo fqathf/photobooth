@@ -7,7 +7,33 @@ const DEFAULT_SETTINGS = {
   customFrames: []
 };
 
+const getAdminHeaders = () => {
+  if (typeof sessionStorage !== 'undefined') {
+    const pwd = sessionStorage.getItem('admin_authenticated');
+    if (pwd) {
+      return { 'x-admin-password': pwd };
+    }
+  }
+  return {};
+};
+
 export const photoboothService = {
+  async authenticate(password: string) {
+    try {
+      const res = await $fetch('/api/auth', {
+        method: 'POST',
+        body: { password }
+      });
+      if ((res as any).success) {
+        sessionStorage.setItem('admin_authenticated', password);
+        return { success: true };
+      }
+      return { success: false, error: 'Invalid password' };
+    } catch (err: any) {
+      return { success: false, error: err.message };
+    }
+  },
+
   async getSettings() {
     try {
       const [settingsData, framesData] = await Promise.all([
@@ -39,6 +65,7 @@ export const photoboothService = {
     try {
       await $fetch('/api/settings', {
         method: 'POST',
+        headers: getAdminHeaders(),
         body: {
           active: settings.active,
           maintenanceMessage: settings.maintenanceMessage,
@@ -52,6 +79,7 @@ export const photoboothService = {
         if (frame.id) {
           await $fetch(`/api/frames/${frame.id}`, {
             method: 'PUT',
+            headers: getAdminHeaders(),
             body: { name: frame.name }
           }).catch(e => console.error('Failed to update frame name:', e));
         }
@@ -68,6 +96,7 @@ export const photoboothService = {
     try {
       const res = await $fetch('/api/frames', {
         method: 'POST',
+        headers: getAdminHeaders(),
         body: newFrame
       });
       return { success: true, image_key: (res as any).image_key };
@@ -80,7 +109,8 @@ export const photoboothService = {
   async deleteCustomFrame(id: string) {
     try {
       await $fetch(`/api/frames/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: getAdminHeaders()
       });
       return { success: true };
     } catch (error: any) {

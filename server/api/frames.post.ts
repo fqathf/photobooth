@@ -5,6 +5,12 @@ export default defineEventHandler(async (event) => {
     return { success: false, error: 'Cloudflare bindings not found' };
   }
 
+  const adminPassword = getHeader(event, 'x-admin-password');
+  if (!env.ADMIN_PASSWORD || adminPassword !== env.ADMIN_PASSWORD) {
+    setResponseStatus(event, 401);
+    return { success: false, error: 'Unauthorized' };
+  }
+
   try {
     const body = await readBody(event);
     const { id, name, canvasWidth, canvasHeight, slots, thumbnail } = body;

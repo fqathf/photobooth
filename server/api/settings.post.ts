@@ -4,6 +4,12 @@ export default defineEventHandler(async (event) => {
   if (!env || !env.DB) {
     return { success: false, error: 'DB binding missing' };
   }
+  
+  const adminPassword = getHeader(event, 'x-admin-password');
+  if (!env.ADMIN_PASSWORD || adminPassword !== env.ADMIN_PASSWORD) {
+    setResponseStatus(event, 401);
+    return { success: false, error: 'Unauthorized' };
+  }
   try {
     const body = await readBody(event);
     const { active, maintenanceMessage, activeEventName } = body;

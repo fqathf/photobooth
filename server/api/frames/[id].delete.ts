@@ -6,6 +6,12 @@ export default defineEventHandler(async (event) => {
     return { success: false, error: 'Invalid context' };
   }
 
+  const adminPassword = getHeader(event, 'x-admin-password');
+  if (!env.ADMIN_PASSWORD || adminPassword !== env.ADMIN_PASSWORD) {
+    setResponseStatus(event, 401);
+    return { success: false, error: 'Unauthorized' };
+  }
+
   try {
     const frame: any = await env.DB.prepare('SELECT image_key FROM frames WHERE id = ?').bind(id).first();
     if (frame && frame.image_key) {

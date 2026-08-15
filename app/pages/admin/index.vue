@@ -261,16 +261,22 @@ const canvasPreviewRef = ref<HTMLCanvasElement | null>(null);
 
 onMounted(async () => {
   const sessionAuth = sessionStorage.getItem('admin_authenticated');
-  if (sessionAuth === 'true') {
-    isAuthenticated.value = true;
-    await loadSettings();
+  if (sessionAuth) {
+    const res = await photoboothService.authenticate(sessionAuth);
+    if (res.success) {
+      isAuthenticated.value = true;
+      await loadSettings();
+    } else {
+      sessionStorage.removeItem('admin_authenticated');
+    }
   }
 });
 
 const handleLogin = async () => {
-  if (password.value === 'K#9mP!2vL$5xQ&8wR*3z') {
+  if (!password.value) return;
+  const res = await photoboothService.authenticate(password.value);
+  if (res.success) {
     isAuthenticated.value = true;
-    sessionStorage.setItem('admin_authenticated', 'true');
     await loadSettings();
   } else {
     alert('Kata sandi salah!');
