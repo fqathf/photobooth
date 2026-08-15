@@ -1,75 +1,83 @@
-# Nuxt Minimal Starter
+# Make Memories with Ella - Virtual Photobooth
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A vintage-style, brutalist web application for a virtual photobooth event. Built with Nuxt 3, TailwindCSS, and Cloudflare Pages (D1 Database & R2 Storage).
 
-## Setup
+## Features
+- **Virtual Photobooth**: Capture photos using webcam.
+- **Adjust & Zoom**: Pinch-to-zoom and pan functionality to perfectly fit your photos into the frame slots.
+- **Custom Frames**: Upload transparent PNG frames dynamically.
+- **Admin Dashboard**: Manage frames, website status, and event name securely.
+- **Cloudflare Integration**: Uses D1 for SQLite database and R2 for object storage.
 
-Make sure to install dependencies:
+## Prerequisites
+- Node.js & npm (or Bun)
+- A Cloudflare Account (for D1 and R2)
+- Wrangler CLI installed globally (`npm install -g wrangler`)
 
-```bash
-# npm
-npm install
+## Local Setup
 
-# pnpm
-pnpm install
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/fqathf/photobooth.git
+   cd photobooth
+   ```
 
-# yarn
-yarn install
+2. **Install dependencies**
+   ```bash
+   bun install
+   # or npm install
+   ```
 
-# bun
-bun install
-```
+3. **Environment Variables**
+   Copy `.dev.vars.example` to `.dev.vars` and set up your admin password.
+   ```bash
+   cp .dev.vars.example .dev.vars
+   ```
+   *Edit `.dev.vars` and change `ADMIN_PASSWORD` to your desired secure password.*
 
-## Development Server
+4. **Setup Cloudflare Local Services**
+   The project uses Cloudflare D1 and R2. For local development, Wrangler will emulate these.
+   Run the local database migrations/schema setup:
+   ```bash
+   npx wrangler d1 execute photobooth-app --local --file=./schema.sql
+   ```
 
-Start the development server on `http://localhost:3000`:
+5. **Run the Development Server**
+   ```bash
+   bun run dev
+   # or npm run dev
+   ```
+   Open `http://localhost:3000` to view the photobooth.
+   Open `http://localhost:3000/admin` to access the Admin Dashboard.
 
-```bash
-# npm
-npm run dev
+## Deployment to Cloudflare Pages
 
-# pnpm
-pnpm dev
+1. **Create Cloudflare Resources**
+   - Go to Cloudflare Dashboard and create a new **D1 Database** named `photobooth-app`.
+   - Create an **R2 Bucket** named `photobooth-storage`.
+   
+2. **Update `wrangler.toml`**
+   Update the `database_id` inside `wrangler.toml` with the newly created D1 Database ID from your Cloudflare dashboard.
 
-# yarn
-yarn dev
+3. **Initialize Production Database**
+   ```bash
+   npx wrangler d1 execute photobooth-app --remote --file=./schema.sql
+   ```
 
-# bun
-bun run dev
-```
+4. **Set Production Secrets**
+   Set your admin password in the Cloudflare Pages environment variables.
+   Go to **Cloudflare Dashboard > Pages > makememorieswithella > Settings > Environment variables**, add `ADMIN_PASSWORD`, and set it to a secure password. Then click Encrypt and Save.
 
-## Production
+5. **Deploy!**
+   ```bash
+   bun run build
+   npx wrangler pages deploy dist
+   ```
+   *(Alternatively, just push to GitHub if Cloudflare Pages is connected to your repository).*
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Tech Stack
+- [Nuxt 3](https://nuxt.com/) (Vue.js Framework)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Lucide Icons](https://lucide.dev/)
+- [Cloudflare Workers/Pages](https://developers.cloudflare.com/pages/)
+- Cloudflare D1 (SQLite) & R2 (Object Storage)
